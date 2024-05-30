@@ -11,22 +11,20 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <olea.user.defined-web>1.42.0-SNAPSHOT</olea.user.defined-web>
-        <olea.user.defined-service>1.42.0-SNAPSHOT</olea.user.defined-service>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.lls.olea.userdefin</groupId>
-            <artifactId>olea-user-defined-web</artifactId>
-            <version>${olea.user.defined-web}</version>
+            <groupId>com.userdefin</groupId>
+            <artifactId>user-defined-web</artifactId>
+            <version>${user.defined-web}</version>
             <scope>provided</scope>
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>com.lls.olea.userdefin</groupId>
-            <artifactId>olea-user-defined-service</artifactId>
-            <version>${olea.user.defined-service}</version>
+            <groupId>com.userdefin</groupId>
+            <artifactId>user-defined-service</artifactId>
+            <version>${user.defined-service}</version>
             <scope>provided</scope>
             <type>jar</type>
         </dependency>
@@ -48,16 +46,16 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>com.lls.olea.userdefin</groupId>
-                                    <artifactId>olea-user-defined-web</artifactId>
-                                    <version>${olea.user.defined-web}</version>
+                                    <groupId>com.userdefin</groupId>
+                                    <artifactId>user-defined-web</artifactId>
+                                    <version>${user.defined-web}</version>
                                     <type>jar</type>
                                     <outputDirectory>${project.build.directory}/work/addpack/module1</outputDirectory>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>com.lls.olea.userdefin</groupId>
-                                    <artifactId>olea-user-defined-service</artifactId>
-                                    <version>${olea.user.defined-service}</version>
+                                    <groupId>com.userdefin</groupId>
+                                    <artifactId>user-defined-service</artifactId>
+                                    <version>${user.defined-service}</version>
                                     <type>jar</type>
                                     <outputDirectory>${project.build.directory}/work/addpack/module2</outputDirectory>
                                 </artifactItem>
