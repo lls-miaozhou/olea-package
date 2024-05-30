@@ -1,0 +1,58 @@
+<assembly>
+    <!-- id自定义 -->
+    <id>olea</id>
+    <formats>
+        <!-- 打为jar包 -->
+        <format>jar</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <!-- 先将本工程内容输出 -->
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <outputDirectory>BOOT-INF/classes</outputDirectory>
+        </fileSet>
+
+        <!-- 输出解压目录下的内容 -->
+        <fileSet>
+            <directory>${project.build.directory}/work/addpack/module1</directory>
+            <outputDirectory>.</outputDirectory>
+            <!-- 这里是module1下的DbDataController类不需要输出参与合并打包，即打包后的jar包没有DbDataController类，按需配置 -->
+            <excludes>
+                <exclude>**/DbDataController.class</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/work/addpack/module2</directory>
+            <outputDirectory>.</outputDirectory>
+            <!-- 这里是module2下的application.yml不需要输出参与合并打包，按需配置 -->
+            <excludes>
+                <exclude>**/application.yml</exclude>
+            </excludes>
+        </fileSet>
+        <fileSet>
+            <directory>${project.build.directory}/work/addpack/module3</directory>
+            <outputDirectory>.</outputDirectory>
+        </fileSet>
+    </fileSets>
+
+    <!--标红部分是对yml文件合并处理，如果没有实现，可去掉 -->
+<!--    <containerDescriptorHandlers>-->
+<!--        <containerDescriptorHandler>-->
+<!--            <handlerName>yml-merge</handlerName>-->
+<!--            <configuration>-->
+<!--                <filePattern>.*/application.yml</filePattern>-->
+<!--                <outputPath>BOOT-INF/classes/application.yml</outputPath>-->
+<!--            </configuration>-->
+<!--        </containerDescriptorHandler>-->
+<!--    </containerDescriptorHandlers>-->
+    <!-- 本工程依赖 -->
+    <dependencySets>
+        <dependencySet>
+            <unpack>false</unpack>
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>BOOT-INF/lib</outputDirectory>
+        </dependencySet>
+    </dependencySets>
+</assembly>

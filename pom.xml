@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>testproject</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <olea.user.defined-web>1.42.0-SNAPSHOT</olea.user.defined-web>
+        <olea.user.defined-service>1.42.0-SNAPSHOT</olea.user.defined-service>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.lls.olea.userdefin</groupId>
+            <artifactId>olea-user-defined-web</artifactId>
+            <version>${olea.user.defined-web}</version>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.lls.olea.userdefin</groupId>
+            <artifactId>olea-user-defined-service</artifactId>
+            <version>${olea.user.defined-service}</version>
+            <scope>provided</scope>
+            <type>jar</type>
+        </dependency>
+        <!-- 添加其他模块的依赖 -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack-classes</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.lls.olea.userdefin</groupId>
+                                    <artifactId>olea-user-defined-web</artifactId>
+                                    <version>${olea.user.defined-web}</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/work/addpack/module1</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.lls.olea.userdefin</groupId>
+                                    <artifactId>olea-user-defined-service</artifactId>
+                                    <version>${olea.user.defined-service}</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/work/addpack/module2</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <recompressZippedFiles>false</recompressZippedFiles>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <!-- 标红部分是合并后的执行包的启动类MANIFEST.MF文件，我这里选module1解压下的文件，按需配启动类 -->
+                                <manifestFile>
+                                    ${project.build.directory}/work/addpack/module1/META-INF/MANIFEST.MF
+                                </manifestFile>
+                            </archive>
+                            <descriptors>
+                                <descriptor>assembly.xml</descriptor>   <!-- 加载指定的assembly配置文件 -->
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+                <!-- 标红部分是合并yml处理的包，如果需要合并yml文件，需自定义适配器对yml进行合并处理，再将依赖包添加进来 -->
+                <!--   <dependencies>
+                        <dependency>
+                            <groupId>com.fql.merge</groupId>
+                            <artifactId>mergeHandle</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                        </dependency>
+                    </dependencies>  -->
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
